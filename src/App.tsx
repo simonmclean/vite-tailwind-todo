@@ -4,6 +4,8 @@ import AddTodoItemForm from './components/AddTodoItemForm'
 import { initialTodoItems } from './data/todoItems'
 import TodoList from './components/TodoList'
 import { TodoItem } from './components/TodoItem'
+import Typography from './components/Typography'
+import AppHeader from './components/AppHeader'
 
 function App() {
   const [todoItems, setTodoItems] = useState(initialTodoItems)
@@ -21,13 +23,26 @@ function App() {
     }))
   }
 
+  function handleAddItem(newItem: TodoItem) {
+    const ids = todoItems.map(({ id }) => id).sort()
+    const newId = ids[ids.length - 1] + 1
+    const itemWithValidId = {
+      ...newItem,
+      id: newId
+    }
+    setTodoItems([...todoItems, itemWithValidId])
+  }
+
   return (
     <>
-      <div className="bg-stone-100 dark:bg-slate-900 py-4">
+      <div className="bg-stone-100 dark:bg-slate-900 min-h-screen min-w-96">
+        <AppHeader />
         <div className="container prose mx-auto p-4">
           <main>
-            <h1 className="text-slate-200">💪 Vitey Todo App</h1>
-            <AddTodoItemForm />
+            <Typography element="h2">Add New Todo</Typography>
+            <AddTodoItemForm onAdd={handleAddItem} />
+            <hr className="dark:border-slate-700" />
+            <Typography element="h2">Todo List</Typography>
             <TodoList todoItems={todoItems} onDelete={handleDeleteItem} onToggleDone={handleToggleDone} />
           </main>
         </div>

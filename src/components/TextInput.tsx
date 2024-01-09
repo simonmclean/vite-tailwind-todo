@@ -12,13 +12,26 @@ export default function({ label, value, onChange, isMultiline }: TextInputProps)
     onChange(e.currentTarget.value)
   }
 
+  const inputCommonClasses = "dark:bg-slate-700 rounded px-3 py-2 w-full mb-4"
+
   return (
-    <label>
-      <span>{label}</span>
+    <label className="block">
+      <span className="block font-bold text-sm mb-2">{label}</span>
       {isMultiline ? (
-        <textarea name={label.toLowerCase()} value={value} onChange={handleChange} />
+        <textarea
+          className={inputCommonClasses}
+          name={label.toLowerCase()}
+          value={value}
+          placeholder="This is an extremely important skill that will come in useful"
+          onChange={handleChange} />
       ) : (
-        <input name={label.toLowerCase()} type="text" value={value} onChange={handleChange} />
+        <input
+          className={inputCommonClasses}
+          placeholder="e.g. Learn to juggle knives"
+          name={label.toLowerCase()}
+          type="text"
+          value={value}
+          onChange={handleChange} />
       )}
     </label>
   )
