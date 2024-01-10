@@ -1,19 +1,19 @@
-import { PropsWithChildren } from "react"
+import { ForwardedRef, HtmlHTMLAttributes, PropsWithChildren, forwardRef } from "react"
 
 type TypographyProps = {
   element: 'h2' | 'h3' | 'p'
   size?: 'small'
   className?: string
-}
+} & HtmlHTMLAttributes<HTMLHeadingElement | HTMLParagraphElement>
 
-export default function({ element, children, className = "", size }: PropsWithChildren<TypographyProps>) {
+function Typography({ element, children, className = "", size, ...otherProps }: PropsWithChildren<TypographyProps>, ref: ForwardedRef<HTMLHeadingElement | HTMLParagraphElement>) {
   if (element === 'h2') {
-    return <h2 className={className + "text-blue-500 text-center text-xl"}>
+    return <h2 {...otherProps} ref={ref} className={className + "text-blue-500 text-center text-xl"}>
       {children}
     </h2>
   }
   if (element === "h3") {
-    return <h3 className={className + "m-0 dark:text-slate-200"}>{children}</h3>
+    return <h3 {...otherProps} ref={ref} className={className + "m-0 dark:text-slate-200"}>{children}</h3>
   }
 
   const paragraphClasses = [
@@ -22,6 +22,8 @@ export default function({ element, children, className = "", size }: PropsWithCh
     size === 'small' ? "text-xs" : ""
   ].join(" ")
   return (
-    <p className={paragraphClasses}>{children}</p>
+    <p {...otherProps} ref={ref} className={paragraphClasses}>{children}</p>
   )
 }
+
+export default forwardRef(Typography)
