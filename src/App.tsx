@@ -11,7 +11,9 @@ function App() {
   const [todoItems, setTodoItems] = useState(initialTodoItems)
 
   function handleDeleteItem(id: number) {
-    setTodoItems(todoItems.filter(item => item.id !== id))
+    animateDelete(`todo-list-item-${id}`, function() {
+      setTodoItems(todoItems.filter(item => item.id !== id))
+    })
   }
 
   function handleToggleDone(id: number) {
@@ -49,6 +51,42 @@ function App() {
       </div>
     </>
   )
+}
+
+// TODO: Is there a more "React" way of doing this, rather than using raw browser APIs?
+function animateDelete(elementId: string, onComplete: () => void) {
+  const elementBeingDeleted = document.getElementById(elementId)
+  if (!elementBeingDeleted) {
+    return onComplete()
+  }
+
+  const deletedHeight = elementBeingDeleted.offsetHeight
+
+  // Fix the element to be deleted in place by setting its height to a fixed value
+  elementBeingDeleted.style.height = `${deletedHeight}px`
+  elementBeingDeleted.style.margin = '0'
+  const deletedChild = elementBeingDeleted.querySelector('article')
+  if (!deletedChild) {
+    return onComplete()
+  }
+
+  // Set the child to position absolute so that it doesn't shrink with its parent
+  deletedChild.style.position = 'absolute'
+  deletedChild.style.width = `${elementBeingDeleted.offsetWidth}px`
+
+  // Fade out and shink in height
+  const fadeAndShrink: Keyframe[] = [
+    { opacity: 1, height: `${deletedHeight}px` },
+    { opacity: 0, height: '0px' },
+  ]
+  const animationConfig: KeyframeAnimationOptions = {
+    duration: 300,
+    fill: 'forwards'
+  }
+
+  window.requestAnimationFrame(() => {
+    elementBeingDeleted.animate(fadeAndShrink, animationConfig).finished.then(onComplete)
+  })
 }
 
 export default App

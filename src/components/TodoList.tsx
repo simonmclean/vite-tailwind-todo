@@ -11,7 +11,7 @@ export default function({ todoItems, onToggleDone, onDelete }: TodoListProps) {
   return (
     <ol className="list-none px-0">
       {todoItems.map(item =>
-        <li className="mb-6" key={item.id}>
+        <li className="mb-6 p-0" key={item.id} id={`todo-list-item-${item.id}`}>
           <TodoItemComponent item={item} onDelete={onDelete} onToggleDone={onToggleDone} />
         </li>
       )}
