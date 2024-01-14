@@ -8,6 +8,9 @@ import {
 import TodoPage from "./pages/TodoPage.tsx";
 import AboutPage from "./pages/AboutPage.tsx";
 import ErrorPage from "./pages/ErrorPage.tsx";
+import { getInitialTheme, setTheme } from "./theme.ts";
+
+setTheme(getInitialTheme())
 
 const router = createBrowserRouter([
   {

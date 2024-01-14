@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import ThemeSelector from "./ThemeSelector";
 
 const linkClasses = "px-2 hover:text-white transition-colors"
 
@@ -15,7 +16,7 @@ function TextLink({ to, text }: { to: string, text: string }) {
 function AppHeader() {
   return (
     <header className="fixed w-full bg-slate-900 border-b border-b-slate-700">
-      <div className="container mx-auto px-6 py-2 flex items-center">
+      <div className="container mx-auto px-2 py-2 flex items-center">
         <div className="prose">
           <h1 className="text-slate-300 text-xl">💪 Vitey Todo App</h1>
         </div>
@@ -38,6 +39,7 @@ function AppHeader() {
             </svg>
           </a>
         </nav>
+        <ThemeSelector />
       </div>
     </header>
   );
