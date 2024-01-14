@@ -1,16 +1,15 @@
 import { useEffect, useRef, useState } from "react";
-import "./App.css";
-import AddTodoItemForm from "./components/AddTodoItemForm";
-import { initialTodoItems } from "./data/todoItems";
-import TodoList from "./components/TodoList";
-import { TodoItem } from "./components/TodoItem";
-import Typography from "./components/Typography";
-import AppHeader from "./components/AppHeader";
-import ToastList from "./components/ToastList";
+import AddTodoItemForm from "../components/AddTodoItemForm";
+import { initialTodoItems } from "../data/todoItems";
+import TodoList from "../components/TodoList";
+import { TodoItem } from "../components/TodoItem";
+import Typography from "../components/Typography";
+import ToastList from "../components/ToastList";
+import PageWithHeader from "../components/PageWithHeader";
 
 const TOAST_TIMEOUT_SECONDS = 6;
 
-function App() {
+function TodoPage() {
   const [todoItems, setTodoItems] = useState(initialTodoItems);
   const [deletedItems, setDeletedItems] = useState<TodoItem[]>([]);
 
@@ -89,30 +88,27 @@ function App() {
   }
 
   return (
-    <>
-      <div className="bg-stone-100 dark:bg-slate-900 min-h-screen min-w-96">
-        <AppHeader />
-        <div className="container prose mx-auto p-4">
-          <main>
-            <Typography element="h2">Add New Todo</Typography>
-            <AddTodoItemForm onAdd={handleAddItem} />
-            <hr className="dark:border-slate-700" />
-            <Typography element="h2">Todo List</Typography>
-            <TodoList
-              todoItems={todoItems}
-              onDelete={handleDeleteItem}
-              onToggleDone={handleToggleDone}
-              onEdit={handleEditItem}
-            />
-          </main>
-        </div>
-        <ToastList
-          items={deletedItems}
-          onAction={handleUndoDelete}
-          toastLifeSpanSeconds={TOAST_TIMEOUT_SECONDS}
-        />
+    <PageWithHeader>
+      <div className="container prose mx-auto p-4">
+        <main>
+          <Typography element="h2">Add New Todo</Typography>
+          <AddTodoItemForm onAdd={handleAddItem} />
+          <hr className="dark:border-slate-700" />
+          <Typography element="h2">Todo List</Typography>
+          <TodoList
+            todoItems={todoItems}
+            onDelete={handleDeleteItem}
+            onToggleDone={handleToggleDone}
+            onEdit={handleEditItem}
+          />
+        </main>
       </div>
-    </>
+      <ToastList
+        items={deletedItems}
+        onAction={handleUndoDelete}
+        toastLifeSpanSeconds={TOAST_TIMEOUT_SECONDS}
+      />
+    </PageWithHeader>
   );
 }
 
@@ -152,4 +148,4 @@ function animateDelete(elementId: string, onComplete: () => void) {
     .finished.then(onComplete);
 }
 
-export default App;
+export default TodoPage
