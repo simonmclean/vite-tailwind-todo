@@ -1,18 +1,25 @@
-import { FormEvent } from "react"
+import { FormEvent } from "react";
 
 type TextInputProps = {
-  label: string
-  value: string
-  onChange: (value: string) => void
-  isMultiline?: boolean
-}
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  isMultiline?: boolean;
+};
 
-export default function({ label, value, onChange, isMultiline }: TextInputProps) {
-  function handleChange<Element extends HTMLInputElement | HTMLTextAreaElement>(e: FormEvent<Element>) {
-    onChange(e.currentTarget.value)
+function TextInput({
+  label,
+  value,
+  onChange,
+  isMultiline,
+}: TextInputProps) {
+  function handleChange<Element extends HTMLInputElement | HTMLTextAreaElement>(
+    e: FormEvent<Element>,
+  ) {
+    onChange(e.currentTarget.value);
   }
 
-  const inputCommonClasses = "dark:bg-slate-700 rounded px-3 py-2 w-full mb-4"
+  const inputCommonClasses = "dark:bg-slate-700 rounded px-3 py-2 w-full mb-4";
 
   return (
     <label className="block">
@@ -23,7 +30,8 @@ export default function({ label, value, onChange, isMultiline }: TextInputProps)
           name={label.toLowerCase()}
           value={value}
           placeholder="This is an extremely important skill that will come in useful"
-          onChange={handleChange} />
+          onChange={handleChange}
+        />
       ) : (
         <input
           className={inputCommonClasses}
@@ -31,8 +39,11 @@ export default function({ label, value, onChange, isMultiline }: TextInputProps)
           name={label.toLowerCase()}
           type="text"
           value={value}
-          onChange={handleChange} />
+          onChange={handleChange}
+        />
       )}
     </label>
-  )
+  );
 }
+
+export default TextInput

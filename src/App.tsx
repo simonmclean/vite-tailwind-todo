@@ -1,85 +1,91 @@
-import { useEffect, useRef, useState } from 'react'
-import './App.css'
-import AddTodoItemForm from './components/AddTodoItemForm'
-import { initialTodoItems } from './data/todoItems'
-import TodoList from './components/TodoList'
-import { TodoItem } from './components/TodoItem'
-import Typography from './components/Typography'
-import AppHeader from './components/AppHeader'
-import Toast from './components/Toast'
+import { useEffect, useRef, useState } from "react";
+import "./App.css";
+import AddTodoItemForm from "./components/AddTodoItemForm";
+import { initialTodoItems } from "./data/todoItems";
+import TodoList from "./components/TodoList";
+import { TodoItem } from "./components/TodoItem";
+import Typography from "./components/Typography";
+import AppHeader from "./components/AppHeader";
+import ToastList from "./components/ToastList";
 
-const TOAST_TIMEOUT_SECONDS = 6
+const TOAST_TIMEOUT_SECONDS = 6;
 
 function App() {
-  const [todoItems, setTodoItems] = useState(initialTodoItems)
-  const [deletedItems, setDeletedItems] = useState<TodoItem[]>([])
+  const [todoItems, setTodoItems] = useState(initialTodoItems);
+  const [deletedItems, setDeletedItems] = useState<TodoItem[]>([]);
 
   // Ref of Todo item ID to window timeout Id
-  const timeoutRef = useRef<Record<string, number>>({})
+  const timeoutRef = useRef<Record<string, number>>({});
 
+  // When user deletes an item, show the "undo" toast for TOAST_TIMEOUT_SECONDS
   useEffect(() => {
     deletedItems.forEach(({ id }) => {
       if (!timeoutRef.current[id]) {
         timeoutRef.current[id] = setTimeout(() => {
-          setDeletedItems(deletedItems.filter((item) => item.id !== id))
-        }, TOAST_TIMEOUT_SECONDS * 1000)
+          // Must use an updater function, otherwise we're updating based outdated state
+          setDeletedItems(d => d.filter((item) => item.id !== id));
+          delete timeoutRef.current[id];
+        }, TOAST_TIMEOUT_SECONDS * 1000);
       }
-    })
-  }, [deletedItems])
+    });
+  }, [deletedItems]);
 
   function handleDeleteItem(id: number) {
     animateDelete(`todo-list-item-${id}`, function() {
-      const deletedItem = todoItems.find(item => item.id === id)
+      const deletedItem = todoItems.find((item) => item.id === id);
       if (deletedItem) {
-        setTodoItems(todoItems.filter(item => item.id !== id))
-        setDeletedItems([...deletedItems, deletedItem])
+        setTodoItems(todoItems.filter((item) => item.id !== id));
+        setDeletedItems([...deletedItems, deletedItem]);
       } else {
-        console.error(`Could not find deleted item with ID: ${id}`)
+        console.error(`Could not find deleted item with ID: ${id}`);
       }
-    })
+    });
   }
 
   function handleUndoDelete(id: number) {
-    const deletedItem = deletedItems.find(item => item.id === id)
+    const deletedItem = deletedItems.find((item) => item.id === id);
     if (deletedItem) {
-      console.log({
-        deletedItem,
-        todoItems
-      })
-      setTodoItems([...todoItems, deletedItem])
-      setDeletedItems(deletedItems.filter(item => item.id !== id))
+      setTodoItems([...todoItems, deletedItem]);
+      setDeletedItems(deletedItems.filter((item) => item.id !== id));
+      const timeoutId = timeoutRef.current[id];
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+        delete timeoutRef.current[id];
+      }
     } else {
-      console.error(`Could not find deleted item with ID: ${id}`)
+      console.error(`Could not find deleted item with ID: ${id}`);
     }
   }
 
   function handleToggleDone(id: number) {
-    setTodoItems(todoItems.map(item => {
-      if (item.id === id) {
-        return { ...item, isDone: !item.isDone }
-      }
-      return item
-    }))
+    setTodoItems(
+      todoItems.map((item) => {
+        if (item.id === id) {
+          return { ...item, isDone: !item.isDone };
+        }
+        return item;
+      }),
+    );
   }
 
   function handleAddItem(newItem: TodoItem) {
-    const ids = todoItems.map(({ id }) => id).sort()
-    const newId = ids[ids.length - 1] + 1
+    const ids = todoItems.map(({ id }) => id).sort();
+    const newId = ids[ids.length - 1] + 1;
     const itemWithValidId = {
       ...newItem,
-      id: newId
-    }
-    setTodoItems([...todoItems, itemWithValidId])
+      id: newId,
+    };
+    setTodoItems([...todoItems, itemWithValidId]);
   }
 
   function handleEditItem(editedItem: TodoItem) {
-    const updatedItems = todoItems.map(item => {
+    const updatedItems = todoItems.map((item) => {
       if (item.id === editedItem.id) {
-        return editedItem
+        return editedItem;
       }
-      return item
-    })
-    setTodoItems(updatedItems)
+      return item;
+    });
+    setTodoItems(updatedItems);
   }
 
   return (
@@ -100,54 +106,50 @@ function App() {
             />
           </main>
         </div>
-        {deletedItems.map(({ title, id }) => (
-          <Toast
-            key={id}
-            message={`Item "${title}" deleted`}
-            buttonText="Undo"
-            action={() => handleUndoDelete(id)}
-          />
-        )
-        )}
+        <ToastList
+          items={deletedItems}
+          onAction={handleUndoDelete}
+          toastLifeSpanSeconds={TOAST_TIMEOUT_SECONDS}
+        />
       </div>
     </>
-  )
+  );
 }
 
 // TODO: Is there a more "React" way of doing this, rather than using raw browser APIs?
 function animateDelete(elementId: string, onComplete: () => void) {
-  const elementBeingDeleted = document.getElementById(elementId)
+  const elementBeingDeleted = document.getElementById(elementId);
   if (!elementBeingDeleted) {
-    return onComplete()
+    return onComplete();
   }
 
-  const deletedHeight = elementBeingDeleted.offsetHeight
+  const deletedHeight = elementBeingDeleted.offsetHeight;
 
   // Fix the element to be deleted in place by setting its height to a fixed value
-  elementBeingDeleted.style.height = `${deletedHeight}px`
-  elementBeingDeleted.style.margin = '0'
-  const deletedChild = elementBeingDeleted.querySelector('article')
+  elementBeingDeleted.style.height = `${deletedHeight}px`;
+  elementBeingDeleted.style.margin = "0";
+  const deletedChild = elementBeingDeleted.querySelector("article");
   if (!deletedChild) {
-    return onComplete()
+    return onComplete();
   }
 
   // Set the child to position absolute so that it doesn't shrink with its parent
-  deletedChild.style.position = 'absolute'
-  deletedChild.style.width = `${elementBeingDeleted.offsetWidth}px`
+  deletedChild.style.position = "absolute";
+  deletedChild.style.width = `${elementBeingDeleted.offsetWidth}px`;
 
   // Fade out and shink in height
   const fadeAndShrink: Keyframe[] = [
     { opacity: 1, height: `${deletedHeight}px` },
-    { opacity: 0, height: '0px' },
-  ]
+    { opacity: 0, height: "0px" },
+  ];
   const animationConfig: KeyframeAnimationOptions = {
     duration: 300,
-    fill: 'forwards'
-  }
+    fill: "forwards",
+  };
 
-  window.requestAnimationFrame(() => {
-    elementBeingDeleted.animate(fadeAndShrink, animationConfig).finished.then(onComplete)
-  })
+  elementBeingDeleted
+    .animate(fadeAndShrink, animationConfig)
+    .finished.then(onComplete);
 }
 
-export default App
+export default App;

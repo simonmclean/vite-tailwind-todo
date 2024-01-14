@@ -1,26 +1,32 @@
-import { ButtonHTMLAttributes, PropsWithChildren } from "react"
+import { ButtonHTMLAttributes, PropsWithChildren } from "react";
 
 type ButtonProps = {
-  style: 'primary' | 'text' | 'icon'
-} & ButtonHTMLAttributes<HTMLButtonElement>
+  style: "primary" | "text" | "icon";
+} & ButtonHTMLAttributes<HTMLButtonElement>;
 
-export default function({ style, disabled, type, children, ...props }: PropsWithChildren<ButtonProps>) {
+function Button({
+  style,
+  disabled,
+  type,
+  children,
+  ...props
+}: PropsWithChildren<ButtonProps>) {
   // Base styles
-  const bg = style === "primary" ? "dark:bg-blue-600" : "bg-transparent"
-  const textColor = style === "text" ? "text-slate-400" : "text-slate-200"
-  const fontWeight = style === "primary" ? "font-bold" : "font-normal"
-  const paddingX = style === "primary" ? "px-4" : "px-1"
+  const bg = style === "primary" ? "dark:bg-blue-600" : "bg-transparent";
+  const textColor = style === "text" ? "text-slate-400" : "text-slate-200";
+  const fontWeight = style === "primary" ? "font-bold" : "font-normal";
+  const paddingX = style === "primary" ? "px-4" : "px-1";
 
   // Hover styles
   const hoverBg = (() => {
     if (style === "primary") {
-      return "hover:bg-blue-800"
+      return "hover:bg-blue-800";
     }
     if (style === "icon") {
-      return "hover:bg-slate-700"
+      return "hover:bg-slate-700";
     }
-  })()
-  const hoverTextColor = style === "text" ? "hover:text-white" : ""
+  })();
+  const hoverTextColor = style === "text" ? "hover:text-white" : "";
 
   const classes = [
     bg,
@@ -35,14 +41,18 @@ export default function({ style, disabled, type, children, ...props }: PropsWith
     "hover:cursor-pointer",
     "disabled:bg-slate-600",
     "disabled:cursor-not-allowed",
-    "transition-colors"
-  ].join(" ")
+    "transition-colors",
+  ].join(" ");
   return (
     <button
       {...props}
       disabled={disabled}
       type={type}
       className={classes + " " + props.className}
-    >{children}</button>
-  )
+    >
+      {children}
+    </button>
+  );
 }
+
+export default Button

@@ -4,37 +4,36 @@ import { TodoItem } from "./TodoItem";
 import Button from "./Button";
 
 type AddTodoItemFormProps = {
-  onAdd: (newItem: TodoItem) => void
-}
+  onAdd: (newItem: TodoItem) => void;
+};
 
-export default function({ onAdd }: AddTodoItemFormProps) {
-  const [title, setTitle] = useState('')
-  const [description, setDescription] = useState('')
+function AddTodoItemForm({ onAdd }: AddTodoItemFormProps) {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault()
+    e.preventDefault();
     onAdd({
       id: -1,
       title: title.trim(),
-      description: description.split('\n').map(str => str.trim()),
+      description: description.split("\n").map((str) => str.trim()),
       createdAt: new Date(),
       lastUpdatedAt: new Date(),
-      isDone: false
-    })
-    setTitle('')
-    setDescription('')
+      isDone: false,
+    });
+    setTitle("");
+    setDescription("");
   }
 
   return (
     <form className="dark:text-slate-300" onSubmit={handleSubmit}>
-      <TextInput
-        label="Title"
-        value={title}
-        onChange={v => setTitle(v)} />
+      <TextInput label="Title" value={title} onChange={(v) => setTitle(v)} />
       <TextInput
         label="Description"
         value={description}
-        onChange={v => setDescription(v)} isMultiline />
+        onChange={(v) => setDescription(v)}
+        isMultiline
+      />
       <Button
         style="primary"
         type="submit"
@@ -44,5 +43,7 @@ export default function({ onAdd }: AddTodoItemFormProps) {
         Add
       </Button>
     </form>
-  )
+  );
 }
+
+export default AddTodoItemForm
