@@ -1,6 +1,7 @@
 import { compareDesc } from "date-fns";
 import { TodoItem } from "./TodoItem";
 import TodoItemComponent from "./TodoItem";
+import Typography from "./Typography";
 
 type TodoListProps = {
   todoItems: TodoItem[];
@@ -15,6 +16,14 @@ function TodoList({
   onEdit,
   onDelete,
 }: TodoListProps) {
+  if (!todoItems.length) {
+    return (
+      <Typography element="p" className="text-center">
+        Nothing to see here 👀 What not add something?
+      </Typography>
+    )
+  }
+
   // Sort by:
   // - lastUpdatedAt
   // - createdAt
