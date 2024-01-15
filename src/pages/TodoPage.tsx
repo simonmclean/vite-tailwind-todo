@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import AddTodoItemForm from "../components/AddTodoItemForm";
 import TodoList from "../components/TodoList";
-import Typography from "../components/Typography";
 import ToastList from "../components/ToastList";
 import PageWithHeader from "../components/PageWithHeader";
 import { TodoItem, getTodoList, saveTodoList } from "../services/todo-list-service";
@@ -93,12 +92,12 @@ function TodoPage() {
 
   return (
     <PageWithHeader>
-      <div className="container prose mx-auto p-4">
+      <div className="container prose dark:prose-invert mx-auto p-4">
         <main>
-          <Typography element="h2">Add New Todo</Typography>
+          <h2>Add New Todo</h2>
           <AddTodoItemForm onAdd={handleAddItem} />
-          <hr className="dark:border-slate-700" />
-          <Typography element="h2">Todo List</Typography>
+          <hr className="dark:border-slate-700 border-slate-300" />
+          <h2>Todo List</h2>
           <TodoList
             todoItems={todoItems}
             onDelete={handleDeleteItem}

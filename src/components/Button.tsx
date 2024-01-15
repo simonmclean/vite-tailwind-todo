@@ -1,54 +1,64 @@
 import { ButtonHTMLAttributes, PropsWithChildren } from "react";
 
+type ButtonStyle = 'primary' | 'text' | 'icon'
+
 type ButtonProps = {
-  style: "primary" | "text" | "icon";
+  buttonStyle: ButtonStyle
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
+const styles = {
+  common: {
+    paddingY: 'py-1',
+    borderRadius: 'rounded-full',
+    cursor: 'hover:cursor-pointer disabled:cursor-not-allowed',
+    transition: 'transition-colors'
+  },
+  primary: {
+    bg: 'dark:bg-blue-600 bg-blue-500 disabled:dark:bg-slate-600 disabled:bg-slate-400',
+    text: 'dark:text-slate-200 text-white disabled:dark:text-slate-300',
+    fontWeight: 'font-bold',
+    paddingX: 'px-4',
+    textSize: 'text-sm'
+  },
+  text: {
+    bg: 'dark:text-slate-400 text-slate-500 hover:dark:text-slate-200 hover:text-slate-900',
+    text: '',
+    fontWeight: '',
+    paddingX: 'px-1',
+    textSize: 'text-sm'
+  },
+  icon: {
+    bg: '',
+    text: '',
+    fontWeight: '',
+    paddingX: 'px-1',
+    textSize: ''
+  },
+}
+
+function stringify(obj: Record<string, string>): string {
+  return Object.values(obj).join(" ")
+}
+
+function getClassName(buttonStyle: ButtonStyle): string {
+  const common = stringify(styles.common)
+  const other = stringify(styles[buttonStyle])
+  return `${common} ${other}`
+}
+
 function Button({
-  style,
+  buttonStyle,
   disabled,
   type,
   children,
-  ...props
+  ...otherProps
 }: PropsWithChildren<ButtonProps>) {
-  // Base styles
-  const bg = style === "primary" ? "dark:bg-blue-600" : "bg-transparent";
-  const textColor = style === "text" ? "text-slate-400" : "text-slate-200";
-  const fontWeight = style === "primary" ? "font-bold" : "font-normal";
-  const paddingX = style === "primary" ? "px-4" : "px-1";
-
-  // Hover styles
-  const hoverBg = (() => {
-    if (style === "primary") {
-      return "hover:bg-blue-800";
-    }
-    if (style === "icon") {
-      return "hover:bg-slate-700";
-    }
-  })();
-  const hoverTextColor = style === "text" ? "hover:text-white" : "";
-
-  const classes = [
-    bg,
-    hoverBg,
-    textColor,
-    hoverTextColor,
-    fontWeight,
-    paddingX,
-    "py-1",
-    "rounded-full",
-    "text-sm",
-    "hover:cursor-pointer",
-    "disabled:bg-slate-600",
-    "disabled:cursor-not-allowed",
-    "transition-colors",
-  ].join(" ");
   return (
     <button
-      {...props}
       disabled={disabled}
       type={type}
-      className={classes + " " + props.className}
+      {...otherProps}
+      className={getClassName(buttonStyle) + " " + otherProps.className}
     >
       {children}
     </button>

@@ -1,5 +1,4 @@
 import PageWithHeader from "../components/PageWithHeader"
-import Typography from "../components/Typography"
 
 const content = {
   technologies: [
@@ -8,7 +7,6 @@ const content = {
     "React",
     "React Router",
     "TailwindCSS",
-    "localForage (TODO)"
   ],
   features: [
     "Add and remove items, with the latter leveraging the Web Animations API.",
@@ -25,24 +23,24 @@ const content = {
 function AboutPage() {
   return (
     <PageWithHeader>
-      <div className="container prose mx-auto p-4">
+      <div className="container prose dark:prose-invert mx-auto p-4">
         <main>
-          <article>
-            <Typography element="h2">About this project</Typography>
-            <Typography element="p">I built this app as a way of shaking off the frontend cobwebs, refreshing my knowledge, and trying out some technologies that have become popular in the last few years.</Typography>
-            <Typography element="p">The tech stack includes:</Typography>
+          <article className="mt-10">
+            <h1>About this project</h1>
+            <p>I built this app as a way of shaking off the frontend cobwebs, refreshing my knowledge, and trying out some technologies that have become popular in the last few years.</p>
+            <p>The tech stack includes:</p>
             <ul>
-              {content.technologies.map(str => (
-                <li><Typography element="p" className="my-0">{str}</Typography></li>
+              {content.technologies.map((str, index) => (
+                <li key={index}><p className="my-0">{str}</p></li>
               ))}
             </ul>
-            <Typography element="p">Features include:</Typography>
+            <p>Features include:</p>
             <ul>
-              {content.features.map(str => (
-                <li><Typography element="p" className="my-0">{str}</Typography></li>
+              {content.features.map((str, index) => (
+                <li key={index}><p className="my-0">{str}</p></li>
               ))}
             </ul>
-            <Typography element="p">Source code can be found at <a className="dark:text-slate-400" href="https://github.com/simonmclean/vite-tailwind-todo">github.com/simonmclean/vite-tailwind-todo</a></Typography>
+            <p>Source code can be found at <a href="https://github.com/simonmclean/vite-tailwind-todo">github.com/simonmclean/vite-tailwind-todo</a></p>
           </article>
         </main>
       </div>

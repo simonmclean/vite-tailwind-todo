@@ -1,13 +1,13 @@
 import { NavLink } from "react-router-dom";
 import ThemeSelector from "./ThemeSelector";
 
-const linkClasses = "px-2 hover:text-white transition-colors"
+const linkClasses = "px-2 dark:hover:text-white hover:text-slate-600 transition-colors no-underline"
 
 function TextLink({ to, text }: { to: string, text: string }) {
   return (
     <NavLink to={to} className={({ isActive }) =>
       isActive
-        ? `${linkClasses} text-blue-500`
+        ? `${linkClasses} dark:text-blue-500 text-blue-600`
         : linkClasses
     }>{text}</NavLink>
   )
@@ -15,17 +15,17 @@ function TextLink({ to, text }: { to: string, text: string }) {
 
 function AppHeader() {
   return (
-    <header className="fixed w-full bg-slate-900 border-b border-b-slate-700">
+    <header className="fixed w-full dark:bg-slate-900 bg-white border-b dark:border-b-slate-700 border-b-slate-300">
       <div className="container mx-auto px-2 py-2 flex items-center">
-        <div className="prose">
-          <h1 className="text-slate-300 text-xl">💪 Vitey Todo App</h1>
+        <div className="prose dark:prose-invert">
+          <p className="text-xl font-bold">💪 Vitey Todo App</p>
         </div>
-        <nav className="flex items-center ml-auto text-slate-400">
+        <nav className="prose dark:prose-invert flex items-center ml-auto dark:text-slate-400">
           <TextLink to="/" text="Todo" />
           <TextLink to="/about" text="About" />
           <a
             href="https://github.com/simonmclean/vite-tailwind-todo"
-            className="hover:text-slate-200 transition-colors ml-2"
+            className="dark:hover:text-slate-200 transition-colors ml-2"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

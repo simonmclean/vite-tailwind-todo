@@ -1,4 +1,3 @@
-import Typography from "./Typography";
 import Button from "./Button";
 import { useEffect, useRef } from "react";
 
@@ -35,16 +34,16 @@ function Toast({
 
   return (
     <div
-      className={`flex rounded relative dark:bg-slate-800 border border-slate-700 p-4 mt-4`}
+      className="flex rounded relative dark:bg-slate-800 border border-slate-700 p-4 mt-4"
     >
       <div
         className="absolute top-0 left-0 w-full h-px dark:bg-blue-500 origin-left"
         ref={lineEl}
       ></div>
-      <Typography element="p" className="mr-4">
+      <p className="prose dark:prose-invert mr-4">
         {message}
-      </Typography>
-      <Button style="primary" onClick={action} className="ml-auto">
+      </p>
+      <Button buttonStyle="primary" onClick={action} className="ml-auto">
         {buttonText}
       </Button>
     </div>

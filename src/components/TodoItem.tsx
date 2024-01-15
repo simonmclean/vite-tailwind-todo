@@ -5,9 +5,9 @@ import {
 } from "@heroicons/react/24/outline";
 import { formatDate } from "../utils";
 import Button from "./Button";
-import Typography from "./Typography";
 import { useRef, useState } from "react";
 import { TodoItem } from "../services/todo-list-service";
+import IconButton from "./IconButton";
 
 type TodoItemProps = {
   item: TodoItem;
@@ -45,10 +45,12 @@ function TodoItem({
     setIsEditing(false);
   }
 
-  // TODO: I don't think this is the idiomatic way to do this. Probably not efficient, render-wise
   const borderColor = item.isDone
-    ? "border-green-300 dark:border-green-400"
-    : "border-slate-200 dark:border-slate-700";
+    ? "border-green-300 dark:border-green-400 border-green-600"
+    : "border-slate-200 dark:border-slate-700 border-slate-300";
+
+  const iconButtonColor = "dark:text-slate-500 text-slate-500"
+  const iconButtonColorHover = "hover:dark:text-slate-300 hover:text-slate-800"
 
   return (
     <div>
@@ -59,33 +61,33 @@ function TodoItem({
           borderColor
         }
       >
-        <header className="mb-4 flex items-center">
-          <Typography
+        <header className="mb-1 flex items-center">
+          <h3
             key={`${isEditing}`}
             contentEditable={isEditing}
-            element="h3"
             ref={headingRef}
+            className="my-0"
           >
             {item.title}
-          </Typography>
+          </h3>
         </header>
         {item.description && (
           <section
             contentEditable={isEditing}
             key={`${isEditing}`}
             ref={descriptionRef}
-            className="text-slate-700 dark:text-slate-200 mb-4"
+            className="mb-4"
           >
             {item.description.map((line, index) => (
-              <Typography key={`line-${index}`} element="p">
+              <p key={`line-${index}`}>
                 {line}
-              </Typography>
+              </p>
             ))}
           </section>
         )}
         <footer className="flex items-center">
           <div className="mr-auto">
-            <Typography element="p" size="small">
+            <p className="text-xs dark:text-slate-400 text-slate-500">
               Added: <time>{formatDate(item.createdAt)}</time>
               {item.lastUpdatedAt &&
                 item.lastUpdatedAt.toString() !== item.createdAt.toString() && (
@@ -94,43 +96,34 @@ function TodoItem({
                     <time>{formatDate(item.lastUpdatedAt)}</time>
                   </>
                 )}
-            </Typography>
+            </p>
           </div>
-          <Button
-            style="icon"
+          <IconButton
             onClick={() => onToggleDone(item.id)}
-            aria-description={item.isDone ? "Mark not done" : "Mark done"}
-          >
-            <CheckCircleIcon
-              className={
-                (item.isDone ? "text-green-500" : "text-slate-400") + " h-5 w-5"
-              }
-            />
-          </Button>
-          <Button
-            style="icon"
-            aria-description="Edit"
-            className="ml-2"
+            description={item.isDone ? "Mark not done" : "Mark done"}
+            className={item.isDone ? "dark:text-green-500 text-green-600" : `${iconButtonColor} ${iconButtonColorHover}`}
+            Icon={CheckCircleIcon}
+          />
+          <IconButton
+            description="Edit"
+            className={`ml-2 ${iconButtonColor} ${iconButtonColorHover}`}
             onClick={() => setIsEditing(!isEditing)}
-          >
-            <PencilSquareIcon className="h-5 w-5 text-slate-400" />
-          </Button>
-          <Button
-            style="icon"
+            Icon={PencilSquareIcon}
+          />
+          <IconButton
             onClick={() => onDelete(item.id)}
-            className="hover:text-red-700 ml-2"
-            aria-description="Delete"
-          >
-            <TrashIcon className="h-5 w-5 text-slate-400" />
-          </Button>
+            className={`ml-2 ${iconButtonColor} dark:hover:text-red-700 hover:text-red-700`}
+            description="Delete"
+            Icon={TrashIcon}
+          />
         </footer>
       </article>
       {isEditing && (
         <div className="flex mt-2 pl-3">
-          <Button style="text" onClick={handleSaveChange}>
+          <Button buttonStyle="text" className="text-xs" onClick={handleSaveChange}>
             Save changes
           </Button>
-          <Button style="text" className="ml-2" onClick={handleCancelChange}>
+          <Button buttonStyle="text" className="text-xs ml-2" onClick={handleCancelChange}>
             Cancel
           </Button>
         </div>

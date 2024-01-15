@@ -1,7 +1,7 @@
 import { FormEvent, useState } from "react";
 import TextInput from "./TextInput";
-import { TodoItem } from "./TodoItem";
 import Button from "./Button";
+import { TodoItem } from "../services/todo-list-service";
 
 type AddTodoItemFormProps = {
   onAdd: (newItem: TodoItem) => void;
@@ -26,19 +26,18 @@ function AddTodoItemForm({ onAdd }: AddTodoItemFormProps) {
   }
 
   return (
-    <form className="dark:text-slate-300" onSubmit={handleSubmit}>
-      <TextInput label="Title" value={title} onChange={(v) => setTitle(v)} />
+    <form onSubmit={handleSubmit}>
+      <TextInput label="Title" value={title} onChange={setTitle} />
       <TextInput
         label="Description"
         value={description}
-        onChange={(v) => setDescription(v)}
+        onChange={setDescription}
         isMultiline
       />
       <Button
-        style="primary"
+        buttonStyle="primary"
         type="submit"
         disabled={!title}
-        className="dark:bg-blue-600 font-bold px-4 py-1 rounded-full text-sm hover:cursor-pointer hover:bg-blue-800 disabled:bg-slate-600 disabled:cursor-not-allowed"
       >
         Add
       </Button>

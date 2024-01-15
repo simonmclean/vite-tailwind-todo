@@ -19,7 +19,7 @@ function TextInput({
     onChange(e.currentTarget.value);
   }
 
-  const inputCommonClasses = "dark:bg-slate-700 rounded px-3 py-2 w-full mb-4";
+  const inputCommonClasses = "dark:bg-slate-800 rounded px-3 py-2 w-full mb-4 border dark:border-slate-700 border-slate-300 dark:focus:border-blue-500 focus:border-blue-500 outline-none";
 
   return (
     <label className="block">
@@ -35,7 +35,7 @@ function TextInput({
       ) : (
         <input
           className={inputCommonClasses}
-          placeholder="e.g. Learn to juggle knives"
+          placeholder="e.g. Learn to juggle cats"
           name={label.toLowerCase()}
           type="text"
           value={value}

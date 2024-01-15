@@ -1,11 +1,10 @@
 import PageWithHeader from "../components/PageWithHeader"
-import Typography from "../components/Typography"
 
 function ErrorPage() {
   return (
     <PageWithHeader>
-      <Typography element="h2">Oops</Typography>
-      <Typography element="p">Something went wrong</Typography>
+      <p>Oops</p>
+      <p>Something went wrong</p>
     </PageWithHeader>
   )
 }

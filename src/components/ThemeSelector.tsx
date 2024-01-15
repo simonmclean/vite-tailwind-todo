@@ -34,15 +34,21 @@ function ThemeSelector() {
     <div className="relative">
       <Button
         id="theme-select-button"
-        style="icon"
-        className="ml-3 mr-0"
+        buttonStyle="icon"
+        className="ml-3 mr-0 dark:text-slate-300 hover:dark:text-white"
         aria-haspopup={true}
         aria-expanded={isDropdownOpen}
         onClick={handleThemeClick}
       >
         <MoonIcon className="h-5 w-5" />
       </Button>
-      <Dropdown labelledBy="theme-select-button" value={selectedTheme} options={dropdownItems} onSelect={handleSelectChange} isOpen={isDropdownOpen} />
+      <Dropdown
+        labelledBy="theme-select-button"
+        value={selectedTheme}
+        options={dropdownItems}
+        onSelect={handleSelectChange}
+        isOpen={isDropdownOpen}
+      />
     </div>
   )
 }

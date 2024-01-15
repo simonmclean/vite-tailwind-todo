@@ -1,7 +1,6 @@
 import { compareDesc } from "date-fns";
-import { TodoItem } from "./TodoItem";
 import TodoItemComponent from "./TodoItem";
-import Typography from "./Typography";
+import { TodoItem } from "../services/todo-list-service";
 
 type TodoListProps = {
   todoItems: TodoItem[];
@@ -18,9 +17,9 @@ function TodoList({
 }: TodoListProps) {
   if (!todoItems.length) {
     return (
-      <Typography element="p" className="text-center">
+      <p className="text-center">
         Nothing to see here 👀 What not add something?
-      </Typography>
+      </p>
     )
   }
 
