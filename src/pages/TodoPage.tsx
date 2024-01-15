@@ -1,16 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import AddTodoItemForm from "../components/AddTodoItemForm";
-import { initialTodoItems } from "../data/todoItems";
 import TodoList from "../components/TodoList";
-import { TodoItem } from "../components/TodoItem";
 import Typography from "../components/Typography";
 import ToastList from "../components/ToastList";
 import PageWithHeader from "../components/PageWithHeader";
+import { TodoItem, getTodoList, saveTodoList } from "../services/todo-list-service";
 
 const TOAST_TIMEOUT_SECONDS = 6;
 
 function TodoPage() {
-  const [todoItems, setTodoItems] = useState(initialTodoItems);
+  const [todoItems, setTodoItems] = useState<TodoItem[]>(getTodoList());
   const [deletedItems, setDeletedItems] = useState<TodoItem[]>([]);
 
   // Ref of Todo item ID to window timeout Id
@@ -28,6 +27,11 @@ function TodoPage() {
       }
     });
   }, [deletedItems]);
+
+  // Persist Todo list to localStorage
+  useEffect(() => {
+    saveTodoList(todoItems)
+  }, [todoItems])
 
   function handleDeleteItem(id: number) {
     animateDelete(`todo-list-item-${id}`, function() {

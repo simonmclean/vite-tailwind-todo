@@ -6,7 +6,7 @@ function setDocumentClass(theme: 'dark' | 'light') {
 }
 
 function setLocalStorage(theme: Theme) {
-  localStorage.theme = theme
+  localStorage.setItem('theme', theme)
 }
 
 export function setTheme(theme: Theme) {
@@ -33,11 +33,9 @@ export function setTheme(theme: Theme) {
 }
 
 export function getInitialTheme(): Theme {
-  if ('theme' in localStorage) {
-    const { theme } = localStorage
-    if (isValidTheme(theme)) {
-      return theme
-    }
+  const valueInLocalStorage = localStorage.getItem('theme')
+  if (valueInLocalStorage && isValidTheme(valueInLocalStorage)) {
+    return valueInLocalStorage
   }
   localStorage.removeItem('theme') // delete in case some bad value has got in here
   return 'system'

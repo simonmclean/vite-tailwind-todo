@@ -7,17 +7,7 @@ import { formatDate } from "../utils";
 import Button from "./Button";
 import Typography from "./Typography";
 import { useRef, useState } from "react";
-
-export type TodoItem = {
-  id: number;
-  title: string;
-  description?: string[];
-  createdAt: Date;
-  lastUpdatedAt: Date;
-  dueAt?: Date;
-  remindAt?: Date;
-  isDone: boolean;
-};
+import { TodoItem } from "../services/todo-list-service";
 
 type TodoItemProps = {
   item: TodoItem;

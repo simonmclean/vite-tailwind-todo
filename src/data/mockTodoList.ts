@@ -1,6 +1,6 @@
 import { TodoItem } from "../components/TodoItem";
 
-export const initialTodoItems: TodoItem[] = [
+export const mockTodoList: TodoItem[] = [
   {
     id: 1,
     title: "Build a TODO app",

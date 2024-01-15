@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Theme, getCurrentTheme, isValidTheme, setTheme } from "../theme"
+import { Theme, getCurrentTheme, isValidTheme, setTheme } from "../services/theme-service"
 import Button from "./Button";
 import { MoonIcon } from "@heroicons/react/24/outline";
 import Dropdown from "./Dropdown";
