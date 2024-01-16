@@ -1,19 +1,18 @@
 import Button from "./Button";
-import { useEffect, useRef } from "react";
+import { PropsWithChildren, useEffect, useRef } from "react";
 
 type ToastProps = {
-  message: string;
   buttonText: string;
   action: () => void;
   lifespanSeconds: number;
 };
 
 function Toast({
-  message,
   buttonText,
   action,
   lifespanSeconds,
-}: ToastProps) {
+  children
+}: PropsWithChildren<ToastProps>) {
   const lineEl = useRef<HTMLDivElement>(null);
   const isAnimating = useRef(false);
 
@@ -40,9 +39,7 @@ function Toast({
         className="absolute top-0 left-0 w-full h-px dark:bg-blue-500 origin-left"
         ref={lineEl}
       ></div>
-      <p className="prose dark:prose-invert mr-4">
-        {message}
-      </p>
+      {children}
       <Button buttonStyle="primary" onClick={action} className="ml-auto">
         {buttonText}
       </Button>

@@ -5,7 +5,7 @@ import ToastList from "../components/ToastList";
 import PageWithHeader from "../components/PageWithHeader";
 import { TodoItem, getTodoList, saveTodoList } from "../services/todo-list-service";
 
-const TOAST_TIMEOUT_SECONDS = 6;
+const TOAST_TIMEOUT_SECONDS = 600;
 
 function TodoPage() {
   const [todoItems, setTodoItems] = useState<TodoItem[]>(getTodoList());

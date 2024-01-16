@@ -9,6 +9,16 @@ type TodoListProps = {
   onToggleDone: (id: number) => void;
 };
 
+function sortTodoList(todoList: TodoItem[]): TodoItem[] {
+  return todoList.sort((a, b) => {
+    const createdCompare = compareDesc(a.createdAt, b.createdAt);
+    if (createdCompare === 0) {
+      return a.id < b.id ? 1 : -1;
+    }
+    return createdCompare;
+  });
+}
+
 function TodoList({
   todoItems,
   onToggleDone,
@@ -23,13 +33,7 @@ function TodoList({
     )
   }
 
-  const todoItemsSorted = todoItems.sort((a, b) => {
-    const createdCompare = compareDesc(a.createdAt, b.createdAt);
-    if (createdCompare === 0) {
-      return a.id < b.id ? 1 : -1;
-    }
-    return createdCompare;
-  });
+  const todoItemsSorted = sortTodoList(todoItems)
 
   return (
     <ol className="list-none px-0">
