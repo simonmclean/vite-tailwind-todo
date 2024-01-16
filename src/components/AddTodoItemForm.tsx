@@ -18,7 +18,6 @@ function AddTodoItemForm({ onAdd }: AddTodoItemFormProps) {
       title: title.trim(),
       description: description.split("\n").map((str) => str.trim()),
       createdAt: new Date(),
-      lastUpdatedAt: new Date(),
       isDone: false,
     });
     setTitle("");

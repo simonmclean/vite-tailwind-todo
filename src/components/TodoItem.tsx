@@ -48,7 +48,6 @@ function TodoItem({
   const borderColor = item.isDone
     ? "border-green-300 dark:border-green-400 border-green-600"
     : "border-slate-200 dark:border-slate-700 border-slate-300";
-
   const iconButtonColor = "dark:text-slate-500 text-slate-500"
   const iconButtonColorHover = "hover:dark:text-slate-300 hover:text-slate-800"
 
@@ -89,13 +88,6 @@ function TodoItem({
           <div className="mr-auto">
             <p className="text-xs dark:text-slate-400 text-slate-500">
               Added: <time>{formatDate(item.createdAt)}</time>
-              {item.lastUpdatedAt &&
-                item.lastUpdatedAt.toString() !== item.createdAt.toString() && (
-                  <>
-                    &nbsp;| Updated:{" "}
-                    <time>{formatDate(item.lastUpdatedAt)}</time>
-                  </>
-                )}
             </p>
           </div>
           <IconButton

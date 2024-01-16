@@ -7,9 +7,6 @@ export type TodoItem = {
   title: string;
   description?: string[];
   createdAt: Date;
-  lastUpdatedAt: Date;
-  dueAt?: Date;
-  remindAt?: Date;
   isDone: boolean;
 };
 

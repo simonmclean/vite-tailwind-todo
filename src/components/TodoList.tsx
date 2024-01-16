@@ -23,20 +23,12 @@ function TodoList({
     )
   }
 
-  // Sort by:
-  // - lastUpdatedAt
-  // - createdAt
-  // - id
   const todoItemsSorted = todoItems.sort((a, b) => {
-    const lastUpdatedCompare = compareDesc(a.lastUpdatedAt, b.lastUpdatedAt);
-    if (lastUpdatedCompare === 0) {
-      const createdCompare = compareDesc(a.createdAt, b.createdAt);
-      if (createdCompare === 0) {
-        return a.id < b.id ? 1 : -1;
-      }
-      return createdCompare;
+    const createdCompare = compareDesc(a.createdAt, b.createdAt);
+    if (createdCompare === 0) {
+      return a.id < b.id ? 1 : -1;
     }
-    return lastUpdatedCompare;
+    return createdCompare;
   });
 
   return (
