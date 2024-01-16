@@ -1,4 +1,3 @@
-import { compareDesc } from "date-fns";
 import TodoItemComponent from "./TodoItem";
 import { TodoItem } from "../services/todo-list-service";
 
@@ -8,16 +7,6 @@ type TodoListProps = {
   onEdit: (item: TodoItem) => void;
   onToggleDone: (id: number) => void;
 };
-
-function sortTodoList(todoList: TodoItem[]): TodoItem[] {
-  return todoList.sort((a, b) => {
-    const createdCompare = compareDesc(a.createdAt, b.createdAt);
-    if (createdCompare === 0) {
-      return a.id < b.id ? 1 : -1;
-    }
-    return createdCompare;
-  });
-}
 
 function TodoList({
   todoItems,
@@ -33,11 +22,9 @@ function TodoList({
     )
   }
 
-  const todoItemsSorted = sortTodoList(todoItems)
-
   return (
     <ol className="list-none px-0">
-      {todoItemsSorted.map((item) => (
+      {todoItems.map((item) => (
         <li className="mb-6 p-0" key={item.id} id={`todo-list-item-${item.id}`}>
           <TodoItemComponent
             item={item}

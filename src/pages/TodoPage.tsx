@@ -4,24 +4,30 @@ import TodoList from "../components/TodoList";
 import ToastList from "../components/ToastList";
 import PageWithHeader from "../components/PageWithHeader";
 import { TodoItem, getTodoList, saveTodoList } from "../services/todo-list-service";
+import { append, insertAtIndex, prepend } from "../utils";
 
 const TOAST_TIMEOUT_SECONDS = 6;
 
+type TodoWithWithListPosition = {
+  item: TodoItem
+  listPos: number
+}
+
 function TodoPage() {
   const [todoItems, setTodoItems] = useState<TodoItem[]>(getTodoList());
-  const [deletedItems, setDeletedItems] = useState<TodoItem[]>([]);
+  const [deletedItems, setDeletedItems] = useState<TodoWithWithListPosition[]>([]);
 
   // Ref of Todo item ID to window timeout Id
   const timeoutRef = useRef<Record<string, number>>({});
 
   // When user deletes an item, show the "undo" toast for TOAST_TIMEOUT_SECONDS
   useEffect(() => {
-    deletedItems.forEach(({ id }) => {
-      if (!timeoutRef.current[id]) {
-        timeoutRef.current[id] = setTimeout(() => {
+    deletedItems.forEach(({ item }) => {
+      if (!timeoutRef.current[item.id]) {
+        timeoutRef.current[item.id] = setTimeout(() => {
           // Must use an updater function, otherwise we're updating based outdated state
-          setDeletedItems(d => d.filter((item) => item.id !== id));
-          delete timeoutRef.current[id];
+          setDeletedItems(d => d.filter((itemWithPos) => itemWithPos.item.id !== item.id));
+          delete timeoutRef.current[item.id];
         }, TOAST_TIMEOUT_SECONDS * 1000);
       }
     });
@@ -35,9 +41,13 @@ function TodoPage() {
   function handleDeleteItem(id: number) {
     animateDelete(`todo-list-item-${id}`, function() {
       const deletedItem = todoItems.find((item) => item.id === id);
-      if (deletedItem) {
+      const deletedItemIndex = todoItems.findIndex((item) => item.id === id);
+      if (deletedItem && deletedItemIndex > -1) {
         setTodoItems(todoItems.filter((item) => item.id !== id));
-        setDeletedItems([...deletedItems, deletedItem]);
+        setDeletedItems(append({
+          item: deletedItem,
+          listPos: deletedItemIndex
+        }, deletedItems))
       } else {
         console.error(`Could not find deleted item with ID: ${id}`);
       }
@@ -45,10 +55,13 @@ function TodoPage() {
   }
 
   function handleUndoDelete(id: number) {
-    const deletedItem = deletedItems.find((item) => item.id === id);
+    const deletedItem = deletedItems.find(({ item }) => item.id === id);
     if (deletedItem) {
-      setTodoItems([...todoItems, deletedItem]);
-      setDeletedItems(deletedItems.filter((item) => item.id !== id));
+      const newTodoItems = todoItems.length > deletedItem.listPos
+        ? insertAtIndex(deletedItem.item, deletedItem.listPos, todoItems)
+        : prepend(deletedItem.item, todoItems)
+      setTodoItems(newTodoItems);
+      setDeletedItems(deletedItems.filter(({ item }) => item.id !== id));
       const timeoutId = timeoutRef.current[id];
       if (timeoutId) {
         clearTimeout(timeoutId);
@@ -72,12 +85,14 @@ function TodoPage() {
 
   function handleAddItem(newItem: TodoItem) {
     const ids = todoItems.map(({ id }) => id).sort();
-    const newId = ids[ids.length - 1] + 1;
+    // If the existing todo list is not empty, set the ID to the highest current ID + 1
+    // Otherwise set it to 1
+    const newId = ids.length ? ids[ids.length - 1] + 1 : 1;
     const itemWithValidId = {
       ...newItem,
       id: newId,
     };
-    setTodoItems([...todoItems, itemWithValidId]);
+    setTodoItems(prepend(itemWithValidId, todoItems));
   }
 
   function handleEditItem(editedItem: TodoItem) {
@@ -107,7 +122,7 @@ function TodoPage() {
         </main>
       </div>
       <ToastList
-        items={deletedItems}
+        items={deletedItems.map(({ item }) => item)}
         onAction={handleUndoDelete}
         toastLifeSpanSeconds={TOAST_TIMEOUT_SECONDS}
       />
