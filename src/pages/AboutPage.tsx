@@ -9,14 +9,13 @@ const content = {
     "TailwindCSS",
   ],
   features: [
-    "Add and remove items, with the latter leveraging the Web Animations API.",
+    "Add, delete and edit items",
     "Undo delete",
-    "Toast notifications, which also leverage the Web Animations API",
+    "Animations",
+    "Toast notifications",
     "Toggle done/not-done",
-    "Editable items",
-    "\"Created at\" and \"Updated at\" timestamps",
-    "Offline support via localStorage",
-    "Light and dark themes (including detection of system theme)",
+    "Offline support",
+    "Light and dark themes (including detection of system theme preference)",
   ]
 }
 
