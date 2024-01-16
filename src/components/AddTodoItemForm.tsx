@@ -14,7 +14,7 @@ function AddTodoItemForm({ onAdd }: AddTodoItemFormProps) {
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     onAdd({
-      id: -1,
+      id: -1, // id will be set in the higher level handler
       title: title.trim(),
       description: description.split("\n").map((str) => str.trim()),
       createdAt: new Date(),
