@@ -81,6 +81,7 @@ function TodoItem({
           <h3
             key={`${isEditing}`}
             contentEditable={isEditing}
+            suppressContentEditableWarning
             ref={headingRef}
             className="my-0"
           >
@@ -90,6 +91,7 @@ function TodoItem({
         {item.description && (
           <section
             contentEditable={isEditing}
+            suppressContentEditableWarning
             key={`${isEditing}`}
             ref={descriptionRef}
             className="mb-4"
