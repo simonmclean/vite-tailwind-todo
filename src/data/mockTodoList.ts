@@ -1,4 +1,4 @@
-import { TodoItem } from "../components/TodoItem";
+import { TodoItem } from "../services/todo-list-service";
 
 export const mockTodoList: TodoItem[] = [
   {
@@ -9,30 +9,21 @@ export const mockTodoList: TodoItem[] = [
       "Use shiney new tools like Vite and Tailwind to learn those as well.",
     ],
     createdAt: new Date("2024-01-07"),
-    lastUpdatedAt: new Date("2024-01-07"),
     isDone: false,
-    // dueAt: new Date("2024-01-17"),
-    // remindAt: new Date("2024-01-16")
   },
   {
     id: 2,
     title: "Learn Vite",
     description: ["Learn what this shiney new tool is about."],
     createdAt: new Date("2024-01-07"),
-    lastUpdatedAt: new Date("2024-01-07"),
     isDone: false,
-    // dueAt: new Date("2024-01-17"),
-    // remindAt: new Date("2024-01-16")
   },
   {
     id: 3,
     title: "Learn Tailwind",
     description: ["Make this app pretty using Tailwind"],
     createdAt: new Date("2024-01-07"),
-    lastUpdatedAt: new Date("2024-01-07"),
     isDone: false,
-    // dueAt: new Date("2024-01-17"),
-    // remindAt: new Date("2024-01-16")
   },
   {
     id: 4,
@@ -42,9 +33,6 @@ export const mockTodoList: TodoItem[] = [
       "Ideally with Typescript and React",
     ],
     createdAt: new Date("2024-01-07"),
-    lastUpdatedAt: new Date("2024-01-07"),
     isDone: false,
-    // dueAt: new Date("2024-01-17"),
-    // remindAt: new Date("2024-01-16")
   },
 ];

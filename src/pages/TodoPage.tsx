@@ -24,7 +24,7 @@ function TodoPage() {
   useEffect(() => {
     deletedItems.forEach(({ item }) => {
       if (!timeoutRef.current[item.id]) {
-        timeoutRef.current[item.id] = setTimeout(() => {
+        timeoutRef.current[item.id] = window.setTimeout(() => {
           // Must use an updater function, otherwise we're updating based outdated state
           setDeletedItems(d => d.filter((itemWithPos) => itemWithPos.item.id !== item.id));
           delete timeoutRef.current[item.id];
