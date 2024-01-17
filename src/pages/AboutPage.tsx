@@ -39,7 +39,8 @@ function AboutPage() {
                 <li key={index}><p className="my-0">{str}</p></li>
               ))}
             </ul>
-            <p>Source code can be found at <a href="https://github.com/simonmclean/vite-tailwind-todo">github.com/simonmclean/vite-tailwind-todo</a></p>
+            <p>Source code can be found at <a href="https://github.com/simonmclean/vite-tailwind-todo">github.com/simonmclean/vite-tailwind-todo</a>.</p>
+            <p>You can find my personal site at <a href="http://simonmclean.dev">simonmclean.dev</a>.</p>
           </article>
         </main>
       </div>
