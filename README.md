@@ -2,6 +2,6 @@
 
 ## TODO
 
+- Lighthouse
 - Accessibility
-- Offline support
-- Verify mobile UX and responsiveness
+

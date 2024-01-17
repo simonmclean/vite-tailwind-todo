@@ -5,7 +5,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { formatDate } from "../utils";
 import Button from "./Button";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { TodoItem } from "../services/todo-list-service";
 import IconButton from "./IconButton";
 
@@ -27,6 +27,20 @@ function TodoItem({
   const headingRef = useRef<HTMLHeadingElement>(null);
   const descriptionRef = useRef<HTMLElement>(null);
 
+  // When we enter edit mode, focus the title and set the cursor position
+  useEffect(() => {
+    const el = headingRef.current
+    if (isEditing && el) {
+      const range = document.createRange();
+      const selection = window.getSelection();
+      range.setStart(el.childNodes[0], item.title.length);
+      range.collapse(true);
+      selection?.removeAllRanges();
+      selection?.addRange(range);
+      el.focus();
+    }
+  }, [isEditing, item.title.length])
+
   function handleSaveChange() {
     const newHeading = headingRef.current?.innerText?.trim() || item.title; // Don't let use set an empty title
     const newDescription = [
@@ -45,9 +59,12 @@ function TodoItem({
     setIsEditing(false);
   }
 
-  const borderColor = item.isDone
-    ? "border-green-300 dark:border-green-400 border-green-600"
-    : "border-slate-200 dark:border-slate-700 border-slate-300";
+  const borderColor = (() => {
+    if (isEditing) return 'dark:border-blue-600 border-blue-500'
+    return item.isDone
+      ? "dark:border-green-400 border-green-600"
+      : "dark:border-slate-700 border-slate-300";
+  })()
   const iconButtonColor = "dark:text-slate-500 text-slate-500"
   const iconButtonColorHover = "hover:dark:text-slate-300 hover:text-slate-800"
 
