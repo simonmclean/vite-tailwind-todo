@@ -6,7 +6,7 @@ const content = {
     "Typescript",
     "React",
     "React Router",
-    "TailwindCSS",
+    "Tailwind CSS",
   ],
   features: [
     "Add, delete and edit items",
