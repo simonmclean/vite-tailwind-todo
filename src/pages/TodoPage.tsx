@@ -130,7 +130,6 @@ function TodoPage() {
   );
 }
 
-// TODO: Is there a more "React" way of doing this, rather than using raw browser APIs?
 function animateDelete(elementId: string, onComplete: () => void) {
   const elementBeingDeleted = document.getElementById(elementId);
   if (!elementBeingDeleted) {
