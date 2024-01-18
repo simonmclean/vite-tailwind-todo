@@ -14,7 +14,7 @@ const content = {
     "Animations",
     "Toast notifications",
     "Toggle done/not-done",
-    "Offline support",
+    "PWA - Add to homescreen and offline mode",
     "Light and dark themes (including detection of system theme preference)",
   ]
 }
