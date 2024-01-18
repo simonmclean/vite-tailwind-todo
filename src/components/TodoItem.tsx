@@ -111,20 +111,20 @@ function TodoItem({
           </div>
           <IconButton
             onClick={() => onToggleDone(item.id)}
-            description={item.isDone ? "Mark not done" : "Mark done"}
+            title={item.isDone ? "Mark not done" : "Mark done"}
             className={item.isDone ? "dark:text-green-500 text-green-600" : `${iconButtonColor} ${iconButtonColorHover}`}
             Icon={CheckCircleIcon}
           />
           <IconButton
-            description="Edit"
+            title="Edit"
             className={`ml-2 ${iconButtonColor} ${iconButtonColorHover}`}
             onClick={() => setIsEditing(!isEditing)}
             Icon={PencilSquareIcon}
           />
           <IconButton
+            title="Delete"
             onClick={() => onDelete(item.id)}
             className={`ml-2 ${iconButtonColor} dark:hover:text-red-700 hover:text-red-700`}
-            description="Delete"
             Icon={TrashIcon}
           />
         </footer>

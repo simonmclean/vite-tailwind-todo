@@ -4,6 +4,7 @@ type ButtonStyle = 'primary' | 'text' | 'icon'
 
 type ButtonProps = {
   buttonStyle: ButtonStyle
+  title?: string
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
 const styles = {
@@ -48,6 +49,7 @@ function getClassName(buttonStyle: ButtonStyle): string {
 
 function Button({
   buttonStyle,
+  title,
   disabled,
   type,
   children,
@@ -55,6 +57,7 @@ function Button({
 }: PropsWithChildren<ButtonProps>) {
   return (
     <button
+      title={title}
       disabled={disabled}
       type={type}
       {...otherProps}

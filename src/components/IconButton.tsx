@@ -4,14 +4,14 @@ import Button from "./Button";
 type IconButtonProps = {
   Icon: ElementType
   onClick: () => void
-  description: string
+  title: string
 } & ButtonHTMLAttributes<HTMLButtonElement>
 
-function IconButton({ Icon, onClick, description, ...otherProps }: IconButtonProps) {
+function IconButton({ Icon, onClick, title, ...otherProps }: IconButtonProps) {
   return (
     <Button
+      title={title}
       buttonStyle="icon"
-      aria-description={description}
       onClick={onClick}
       {...otherProps}
     >

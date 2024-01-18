@@ -33,6 +33,7 @@ function ThemeSelector() {
   return (
     <div className="relative">
       <Button
+        title="Theme select"
         id="theme-select-button"
         buttonStyle="icon"
         className="ml-3 mr-0 dark:text-slate-300 hover:dark:text-white"

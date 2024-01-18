@@ -26,6 +26,7 @@ function AppHeader() {
           <a
             href="https://github.com/simonmclean/vite-tailwind-todo"
             className="dark:hover:text-slate-200 transition-colors ml-2"
+            aria-label="Source code on Github"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
