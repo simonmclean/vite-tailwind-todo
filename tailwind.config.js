@@ -8,14 +8,23 @@ export default {
       sans: ['Inter var', ...defaultTheme.fontFamily.sans],
     },
     extend: {
+      lineHeight: {
+        normal: '10',
+      },
       typography: ({ theme }) => ({
         DEFAULT: {
           css: {
             h1: {
-              color: theme('colors.blue[600]')
+              color: theme('colors.blue[600]'),
             },
             h2: {
-              color: theme('colors.blue[600]')
+              color: theme('colors.blue[600]'),
+            },
+            h3: {
+              lineHeight: 1.5
+            },
+            p: {
+              lineHeight: 1.4
             }
           }
         },

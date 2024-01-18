@@ -72,7 +72,7 @@ function TodoItem({
     <div>
       <article
         className={
-          "bg-white dark:bg-slate-800 rounded-lg p-4 prose-p:m-0 border transition-colors" +
+          "prose dark:prose-invert prose-p:mt-0 prose-p:mb-1 bg-white dark:bg-slate-800 rounded-lg p-4 border transition-colors" +
           " " +
           borderColor
         }
@@ -83,7 +83,7 @@ function TodoItem({
             contentEditable={isEditing}
             suppressContentEditableWarning
             ref={headingRef}
-            className="my-0"
+            className="mb-2 mt-0 dark:text-slate-300 text-slate-700"
           >
             {item.title}
           </h3>
@@ -94,7 +94,7 @@ function TodoItem({
             suppressContentEditableWarning
             key={`${isEditing}`}
             ref={descriptionRef}
-            className="mb-4"
+            className="mb-4 dark:text-slate-400 text-slate-600"
           >
             {item.description.map((line, index) => (
               <p key={`line-${index}`}>
