@@ -1,7 +1,3 @@
 # 💪 Vitey Todo App
 
-## TODO
-
-- Lighthouse
-- Accessibility
-
+Deployed to [zingy-marzipan-dd990d.netlify.app/](https://zingy-marzipan-dd990d.netlify.app/)
